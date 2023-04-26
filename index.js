@@ -1,3 +1,6 @@
+const workSpace = document.getElementById('workSpace')
+
+
 function getClickPosition(e) {
     var p = {
       x: e.clientX,
@@ -18,9 +21,9 @@ function getClickPosition(e) {
     div.style.left = (point.x - dotSize / 2) + "px"
     div.style.top = (point.y - dotSize / 2) + "px"
     div.style.borderRadius = "50%"
-    root.appendChild(div);
+    workSpace.appendChild(div);
   }
   
-  document.getElementById("root").addEventListener('click', function(e) {
+  workSpace.addEventListener('click', function(e) {
     getClickPosition(e);
   })

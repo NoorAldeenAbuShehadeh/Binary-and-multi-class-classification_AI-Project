@@ -2,3 +2,15 @@ body{
     padding: 0;
     margin: 0;
 }
+
+.container{
+    background-color: antiquewhite;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+.workSpace{
+    width: 500px;
+    height: 300px;
+    background-color: #ccc;
+}
