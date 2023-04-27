@@ -53,9 +53,14 @@ function changeClassType() {
 }
 
 function getClickPosition(e) {
+  const point = workSpace.createSVGPoint();
+  point.x = e.clientX;
+  point.y = e.clientY;
+  const svgPoint = point.matrixTransform(workSpace.getScreenCTM().inverse());
+  
   let p = {
-    x1: e.clientX,
-    x2: e.clientY,
+    x1: svgPoint.x,
+    x2: svgPoint.y,
     yd: classType,
   };
   trainingData.push(p);
@@ -74,11 +79,12 @@ function drawAt(point, color, dotSize) {
       "http://www.w3.org/2000/svg",
       "circle"
     );
-    newCircle.style.position='relative'
     newCircle.setAttribute("cx", point.x1);
     newCircle.setAttribute("cy", point.x2);
     newCircle.setAttribute("r", dotSize / 2);
     newCircle.setAttribute("fill", "black");
+    newCircle.setAttribute("stroke", "black");
+    newCircle.setAttribute("stroke-width", "2");
     workSpace.appendChild(newCircle);
   } else if (classType === 1) {
     const newRect = document.createElementNS(
