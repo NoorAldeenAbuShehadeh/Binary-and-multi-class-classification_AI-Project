@@ -1,11 +1,13 @@
-export const Perceptron = (learningRate, maxNumIterations, trainingData) => {
+export const Perceptron = (learningRate, maxNumIterations, trainingData, typeofClass) => {
   let w1 = Math.random() - 0.5;
   let w2 = Math.random() - 0.5;
   let threshold = 0.2;
   let wt = -1; //assume wight of threshold = -1
   let index = 0;//index of training data 
   for (let i = 0; i < maxNumIterations; i++) {
-    const { x1, x2, yd } = trainingData[index++];
+    let { x1, x2, yd } = trainingData[index++];
+    if(yd===typeofClass)yd=1;
+    else yd=-1
     if(index===trainingData.length)index=0;
     const ya = signFunction(w1 * x1 + w2 * x2 + wt * threshold);
     const error = yd - ya;

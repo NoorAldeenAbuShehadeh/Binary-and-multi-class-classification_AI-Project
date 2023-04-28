@@ -14,7 +14,9 @@ const maxIteration = document.getElementById("maxIteration");
 const learningRate = document.getElementById("learningRate");
 const trainingData = [];
 let classType = 0;
+let finish=0
 let isStarted = false;
+let result
 // Listeners
 workSpace.addEventListener("click", (e) => {
   getClickPosition(e);
@@ -53,13 +55,20 @@ function changeClassType() {
 }
 
 function getClickPosition(e) {
+  const point = workSpace.createSVGPoint();
+  point.x = e.clientX;
+  point.y = e.clientY;
+  const svgPoint = point.matrixTransform(workSpace.getScreenCTM().inverse());
   let p = {
-    x1: e.clientX,
-    x2: e.clientY,
+    x1: svgPoint.x,
+    x2: svgPoint.y,
     yd: classType,
   };
   trainingData.push(p);
   drawAt(p, "black", 10);
+  if(finish){
+    console.log(((result.w1 * p.x1 + result.w2 * p.x2 -  result.threshold)>=0?1:-1)==1?0:1)
+  }
   if (!isStarted) {
     isStarted = true;
     classNum.disabled = true;
@@ -86,7 +95,7 @@ function drawAt(point, color, dotSize) {
       "rect"
     );
     newRect.setAttribute("x", point.x1);
-    newRect.setAttribute("y", point.x2 - 60);
+    newRect.setAttribute("y", point.x2);
     newRect.setAttribute("width", dotSize);
     newRect.setAttribute("height", dotSize);
     newRect.setAttribute("fill", "blue");
@@ -98,9 +107,9 @@ function drawAt(point, color, dotSize) {
     );
     newPolygon.setAttribute(
       "points",
-      `${point.x1},${point.x2 - 60} ${point.x1 + dotSize},${
-        point.x2 - 60 + dotSize
-      } ${point.x1 - dotSize},${point.x2 - 60 + dotSize}`
+      `${point.x1},${point.x2 } ${point.x1 + dotSize},${
+        point.x2 + dotSize
+      } ${point.x1 - dotSize},${point.x2 + dotSize}`
     );
     newPolygon.setAttribute("fill", "red");
     workSpace.appendChild(newPolygon);
@@ -111,10 +120,10 @@ function drawAt(point, color, dotSize) {
     );
     newPolygon.setAttribute(
       "points",
-      `${point.x1},${point.x2 - 60} ${point.x1 + dotSize},${point.x2 - 60} ${
+      `${point.x1},${point.x2 } ${point.x1 + dotSize},${point.x2 } ${
         point.x1 + dotSize
-      },${point.x2 - 60 + dotSize} ${point.x1 - dotSize},${
-        point.x2 - 60 + dotSize
+      },${point.x2 + dotSize} ${point.x1 - dotSize},${
+        point.x2 + dotSize
       }`
     );
     newPolygon.setAttribute("fill", "green");
@@ -123,12 +132,14 @@ function drawAt(point, color, dotSize) {
 }
 
 function findWight() {
-  let result = Perceptron(learningRate.value, maxIteration.value, trainingData);
+  result = Perceptron(learningRate.value, maxIteration.value, trainingData, 0);
   console.log(result);
-  const x1 = 0;
-  const y1 = 200;
+  const y1 = 300;//w1*x+w2*y=th
+  const x1 = (result.threshold-(result.w2*y1))/result.w1;
+  
   const y2 = 0;
-  const x2 = 200;
+  const x2 = (result.threshold-(result.w2*y2))/result.w1;
+  console.log("x1",x1,'y1',y1,'x2',x2,'y2',y2)
   const newLine = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "line"
@@ -140,4 +151,5 @@ function findWight() {
   newLine.setAttribute("stroke", "black");
   newLine.setAttribute("stroke-width", "2");
   workSpace.appendChild(newLine);
+  finish=1
 }
