@@ -134,10 +134,10 @@ function drawAt(point, color, dotSize) {
 function findWight() {
   result = Perceptron(learningRate.value, maxIteration.value, trainingData, 0);
   console.log(result);
-  const y1 = 300;//w1*x+w2*y=th
-  const x1 = (result.threshold-(result.w2*y1))/result.w1;
+  const x1 = 0;//w1*x+w2*y=th
+  const y1 = (result.threshold-(result.w1*x1))/result.w2;
   
-  const y2 = 0;
+  const y2 = 300;
   const x2 = (result.threshold-(result.w2*y2))/result.w1;
   console.log("x1",x1,'y1',y1,'x2',x2,'y2',y2)
   const newLine = document.createElementNS(
@@ -151,5 +151,26 @@ function findWight() {
   newLine.setAttribute("stroke", "black");
   newLine.setAttribute("stroke-width", "2");
   workSpace.appendChild(newLine);
+
+
+  /////////////////////////////////////////////////////////
+  const x4 = 500;//w1*x+w2*y=th
+  const y4 = (result.threshold-(result.w1*x4))/result.w2;
+  
+  const y3 = 0;
+  const x3 = (result.threshold-(result.w2*y3))/result.w1;
+  console.log("x3",x3,'y3',y3,'x4',x4,'y4',y4)
+  const newLine2 = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "line"
+  );
+  newLine.setAttribute("x1", x3);
+  newLine.setAttribute("y1", y3);
+  newLine.setAttribute("x2", x4);
+  newLine.setAttribute("y2", y4);
+  newLine.setAttribute("stroke", "black");
+  newLine.setAttribute("stroke-width", "2");
+  workSpace.appendChild(newLine2);
+
   finish=1
 }
