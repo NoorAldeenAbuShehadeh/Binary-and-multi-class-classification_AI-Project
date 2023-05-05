@@ -1,4 +1,5 @@
 export const Perceptron = (learningRate, maxNumIterations, trainingData, typeofClass) => {
+  let MSE=0;
   let w1 = Math.random() - 0.5; // -0.5 to 0.5
   let w2 = Math.random() - 0.5;
   let threshold = Math.random() - 0.5; // initialize bias term to a random value
@@ -10,11 +11,13 @@ export const Perceptron = (learningRate, maxNumIterations, trainingData, typeofC
     if (index === trainingData.length) index = 0;
     const ya = signFunction(w1 * x1 + w2 * x2 - threshold); // include bias term in computation
     const error = yd - ya;
+    MSE+=(Math.pow(error,2));
     w1 += learningRate * error * x1;
     w2 += learningRate * error * x2;
     threshold += learningRate * -1 * error; // update bias term
   }
-  return { w1, w2, threshold }; // return bias as well
+  MSE = MSE/maxNumIterations;
+  return { w1, w2, threshold, MSE}; // return bias as well
 };
 
 function signFunction(x) {

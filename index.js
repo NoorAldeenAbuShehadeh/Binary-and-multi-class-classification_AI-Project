@@ -17,6 +17,7 @@ let classType = 0;
 let finish=0
 let isStarted = false;
 let result
+let finalResults = []
 // Listeners
 workSpace.addEventListener("click", (e) => {
   getClickPosition(e);
@@ -65,9 +66,20 @@ function getClickPosition(e) {
     yd: classType,
   };
   trainingData.push(p);
-  drawAt(p, "black", 10);
+  drawAt(p, 10);
   if(finish){
-    console.log(((result.w1 * p.x1 + result.w2 * p.x2 -  result.threshold)>=0?1:-1)==1?0:1)
+    let indexOfMax;
+    for(let i=0;i<finalResults.length;i++){
+      if (finalResults[i].w1 * p.x1 + finalResults[i].w2 * p.x2 -  finalResults[i].threshold > 0){
+        indexOfMax=i;
+        break;
+      }else if(classNum.value==2){
+        indexOfMax=1;
+      }else{
+        indexOfMax="Not recognize"
+      }
+    }
+    console.log("the type of class is: ",indexOfMax)
   }
   if (!isStarted) {
     isStarted = true;
@@ -76,7 +88,7 @@ function getClickPosition(e) {
   return p;
 }
 
-function drawAt(point, color, dotSize) {
+function drawAt(point, dotSize) {
   console.log(point);
   if (classType === 0) {
     const newCircle = document.createElementNS(
@@ -132,7 +144,9 @@ function drawAt(point, color, dotSize) {
 }
 
 function findWight() {
-  result = Perceptron(learningRate.value, maxIteration.value, trainingData, 0);
+  for(let i=0;i<Number(classNum.value);i++){
+  result = Perceptron(learningRate.value, maxIteration.value, trainingData, i);
+  finalResults.push(result)
   console.log(result);
   const x1 = 0;//w1*x+w2*y=th
   const y1 = (result.threshold-(result.w1*x1))/result.w2;
@@ -140,19 +154,25 @@ function findWight() {
   const y2 = (result.threshold-(result.w1*x2))/result.w2;
   // 
   console.log("x1",x1,'y1',y1,'x2',x2,'y2',y2)
+  console.log("The value of MSE = ",result.MSE)
   const newLine = document.createElementNS(
     "http://www.w3.org/2000/svg",
     "line"
   );
 
-
+  let color;
+  if(i===0)color='black';
+  else if(i===1)color='blue'
+  else if(i===2)color='red'
+  else if(i===3)color='green'
   newLine.setAttribute("x1", x1);
   newLine.setAttribute("y1", y1);
   newLine.setAttribute("x2", x2);
   newLine.setAttribute("y2", y2);
-  newLine.setAttribute("stroke", "black");
+  newLine.setAttribute("stroke", color);
   newLine.setAttribute("stroke-width", "2");
   workSpace.appendChild(newLine);
-
+  if(Number(classNum.value)===2)break;
+  }
   finish=1
 }
