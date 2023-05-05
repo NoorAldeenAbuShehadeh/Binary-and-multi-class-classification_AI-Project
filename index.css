@@ -22,3 +22,8 @@ body{
     height: 300px;
     background-color: #ccc;
 }
+
+#myCanvas{
+    margin-top: 400px;
+    margin-left: 200px;
+}
