@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,73 +8,62 @@
     <title>Clasification Project</title>
     <link rel="stylesheet" href="./index.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="classNumContainer">
-            <label for="classNum">Choose number of classes:</label>
-            <select name="numLabel" id="classNum">
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-            <br>
-            <label>learning rate</label><input type="number" id="learningRate" value="0.1">
-            <label>max number of iteration</label><input type="number" id="maxIteration" value="1000000">
-            <button id="solveBtn">Solve</button>
+   
+        <div class="container">
+            <h1>Binary Classification</h1>
+            <div class="classNumContainer">
+                <div class="NumContainer">
+                <label for="classNum">Choose number of classes:</label>
+                <select name="numLabel" id="classNum">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <label>learning rate</label><input type="number" id="learningRate" value="0.1">
+                </div>
+                <div>
+                <label>max number of iteration</label><input type="number" id="maxIteration" value="1000000">
+                <button id="solveBtn">Solve</button>
+                <button id="reloadBtn">Reload</button>
+                <button id="addDataBtn" style="display: none;">Add new data</button>
+                </div>
+            </div>
+            <div class="classTypeContainer">
+                <div class="classAContainer" id="classAContainer">
+                    <input type="radio" id="classA" name="typeClass" value="A" checked>
+                    <label for="classA">Class A</label>
+                </div>
+                <div class="classBContainer" id="classBContainer">
+                    <input type="radio" id="classB" name="typeClass" value="B">
+                    <label for="classB">Class B</label>
+                </div>
+                <div class="classCContainer" id="classCContainer">
+                    <input type="radio" id="classC" name="typeClass" value="C">
+                    <label for="classC">Class C</label>
+                </div>
+                <div class="classDContainer" id="classDContainer">
+                    <input type="radio" id="classD" name="typeClass" value="D">
+                    <label for="classD">Class D</label>
+                </div>
+            </div>
         </div>
-        <div class="classTypeContainer">
-            <div class="classAContainer" id="classAContainer">
-                <input type="radio" id="classA" name="typeClass" value="A" checked >
-                <label for="classA">Class A</label>
-            </div>
-            <div class="classBContainer" id="classBContainer">
-                <input type="radio" id="classB" name="typeClass" value="B">
-                <label for="classB">Class B</label>
-            </div>
-            <div class="classCContainer" id="classCContainer">
-                <input type="radio" id="classC" name="typeClass" value="C">
-                <label for="classC">Class C</label>
-            </div>
-            <div class="classDContainer" id="classDContainer">
-                <input type="radio" id="classD" name="typeClass" value="D">
-                <label for="classD">Class D</label>
-            </div>
-        </div>
-        <svg class="workSpace" id="workSpace" >
-            <!-- <line x1="98" y1="115" x2="345" y2="263" stroke="black" stroke-width="1px"></line> -->
+        <div class="home-container">
+            <div id="test-data">choose your points</div>
+        <svg class="workSpace" id="workSpace">
         </svg>
-    </div>
-    <!-- <canvas id="myCanvas" width="400" height="200"></canvas> -->
-    <div class="matrix">
-        <table id="table">
-                <!-- <tr>
-                <td></td>
-                <td>Class A</td>
-                <td>Class B</td>
-                <td>Class C</td>
-              </tr>
-              <tr>
-                <td>Class A</td>
-                <td>Row 1, Column 2</td>
-                <td>Row 1, Column 3</td>
-                <td>Row 1, Column 3</td>
-              </tr>
-              <tr>
-                <td>Class B</td>
-                <td>Row 2, Column 2</td>
-                <td>Row 2, Column 3</td>
-                <td>Row 1, Column 3</td>
-              </tr>
-              <tr>
-                <td>Class C</td>
-                <td>Row 3, Column 2</td>
-                <td>Row 3, Column 3</td>
-                <td>Row 1, Column 3</td>
-              </tr> -->
-          </table>
-    </div>
+
+        <div id="MSE"></div>
+
+        <div class="matrix">
+            <table id="table">
+            </table>
+        </div>
+        </div>
     <script type="module" src="./index.js"></script>
 
-    
+
 </body>
+
 </html>
