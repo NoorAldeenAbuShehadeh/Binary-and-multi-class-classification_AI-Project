@@ -28,3 +28,18 @@ body{
     margin-left: 200px;
 }
 
+.matrix{
+    margin-top: 400px;
+    /* background-color: aqua; */
+}
+
+table {
+    border-collapse: collapse;
+    /* border: 1px solid black; */
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+
