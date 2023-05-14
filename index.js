@@ -207,3 +207,37 @@ const findConfusionMatrix=(finalResults, trainingData, classNum)=>{
   }
   return ConfusionMatrix
 }
+
+const drawConfusionMatrix = (matrix, labels) => {
+  let table = document.getElementById('table')
+  let index = 0;
+  for (let i = 0; i <= matrix.length; i++) {
+    let tr = document.createElement("tr")
+
+    for (let j = 0; j <= matrix.length; j++) {
+      if (i == 0) {
+        let td = document.createElement("td")
+        td.textContent = labels[j]
+        tr.appendChild(td)
+      } else {
+        let td = document.createElement("td")
+        if (j == 0) {
+          td.textContent = labels[index]
+          tr.appendChild(td)
+        } else {
+          td.textContent = matrix[i - 1][j - 1]
+          tr.appendChild(td)
+        }
+      }
+    }
+    index++
+    table.appendChild(tr)
+  }
+}
+
+let mm = [  [10, 5, 0],
+  [8, 9, 1],
+  [22, 7, 2],
+]
+
+drawConfusionMatrix(mm, ["", "Class A", "Class B", "Class C"])
