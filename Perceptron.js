@@ -24,7 +24,7 @@ export const Perceptron = (learningRate, maxNumIterations, trainingData, typeofC
   return { w1, w2, threshold, MSE}; // return bias as well
 };
 
-function signFunction(x) {
+export const signFunction=(x)=> {
   if (x >= 0) {
     return 1;
   } else {

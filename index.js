@@ -1,4 +1,4 @@
-import { Perceptron } from "./Perceptron.js";
+import { Perceptron, signFunction } from "./Perceptron.js";
 const workSpace = document.getElementById("workSpace");
 const classNum = document.getElementById("classNum");
 const classA = document.getElementById("classA");
@@ -144,6 +144,9 @@ function drawAt(point, dotSize) {
 }
 
 function findWight() {
+  const lines = document.querySelectorAll('svg line');
+  lines.forEach(line => line.remove());
+  finalResults = []
   for(let i=0;i<Number(classNum.value);i++){
   result = Perceptron(learningRate.value, maxIteration.value, trainingData, i);
   finalResults.push(result)
@@ -175,4 +178,32 @@ function findWight() {
   if(Number(classNum.value)===2)break;
   }
   finish=1
+  const ConfusionMatrix = findConfusionMatrix(finalResults, trainingData, Number(classNum.value));
+  console.log("ConfusionMatrix = ",ConfusionMatrix)
+}
+
+const findConfusionMatrix=(finalResults, trainingData, classNum)=>{
+  const ConfusionMatrix = []  
+  
+  for(let i=0;i<classNum;i++){
+    ConfusionMatrix.push([])
+    for(let j=0;j<=classNum;j++)
+        ConfusionMatrix[i].push(0)//initialization of Confusion Matrix
+      }
+
+  for(let i=0;i<trainingData.length;i++){
+    const {x1,x2,yd}=trainingData[i];
+    for(let j=0;j<classNum;j++){
+      let x=j;
+      if(classNum===2)x=0;
+      const {w1, w2, threshold} = finalResults[x];
+      let result = signFunction(x1*w1+x2*w2-threshold)
+      if(result>0 || (classNum===2 && result<0 && j===1)){
+        console.log("j= ",j)
+        ConfusionMatrix[yd][j]++
+        break
+      }
+    }
+  }
+  return ConfusionMatrix
 }
