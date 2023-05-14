@@ -12,6 +12,8 @@ const classDContainer = document.getElementById("classDContainer");
 const solveBtn = document.getElementById("solveBtn");
 const maxIteration = document.getElementById("maxIteration");
 const learningRate = document.getElementById("learningRate");
+const tooltipGroup = document.getElementById('myTooltipGroup');
+const tooltipText = document.getElementById('tooltipText');
 const trainingData = [];
 let classType = 0;
 let finish=0
@@ -65,8 +67,11 @@ function getClickPosition(e) {
     x2: svgPoint.y,
     yd: classType,
   };
-  trainingData.push(p);
-  drawAt(p, 10);
+  
+  if(!finish){
+    drawAt(p, 10);
+    trainingData.push(p);
+  }/**************************** */
   if(finish){
     let indexOfMax;
     for(let i=0;i<finalResults.length;i++){
@@ -79,6 +84,9 @@ function getClickPosition(e) {
         indexOfMax="Not recognize"
       }
     }
+    tooltipGroup.setAttribute('transform', `translate(${p.x1},${p.x2})`);
+    tooltipText.textContent ="the type of class is: "+ indexOfMax
+    tooltipGroup.style.display = 'block'
     console.log("the type of class is: ",indexOfMax)
   }
   if (!isStarted) {
@@ -202,6 +210,8 @@ const findConfusionMatrix=(finalResults, trainingData, classNum)=>{
         console.log("j= ",j)
         ConfusionMatrix[yd][j]++
         break
+      }else if(j===classNum-1){
+        ConfusionMatrix[yd][j+1]++
       }
     }
   }
