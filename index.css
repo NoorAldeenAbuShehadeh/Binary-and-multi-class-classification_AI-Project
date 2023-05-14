@@ -3,11 +3,23 @@ body{
     margin: 0;
 }
 
-.container{
-    background-color: antiquewhite;
-    /* display: flex;
+.home-container{
+    display: flex;
     flex-direction: column;
-    align-items: center; */
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    padding: 5px;
+    background-color: #E8E8E4;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 .classTypeContainer{
     display: flex;
@@ -17,7 +29,101 @@ body{
 }
 
 .workSpace{
-    width: 500px;
-    height: 300px;
+    width: 800px;
+    height: 400px;
     background-color: #ccc;
+    border-radius: 10px;
 }
+
+#myCanvas{
+    margin-top: 400px;
+    margin-left: 200px;
+}
+
+.matrix{
+    margin: 20px;
+}
+
+  .matrix table {
+    border-collapse: collapse;
+  }
+  
+  .matrix th,
+  .matrix td {
+    padding: 20px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .matrix th {
+    background-color: #f1f1f1;
+  }
+  
+  .matrix tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  #MSE , #test-data{
+    margin: 10px;
+    font-weight: bold;
+    font-size: 26px;
+  }
+
+
+  
+.NumContainer{
+    margin: 20px;
+}
+
+  .classNumContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .classNumContainer label,
+  .classTypeContainer label {
+    margin-right: 10px;
+  }
+  
+  .classNumContainer select,
+  .classNumContainer input[type="number"],
+  .classNumContainer button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  
+  .classTypeContainer {
+    padding: 20px;
+    display: flex;
+  }
+  
+  .classTypeContainer div {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .classTypeContainer input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .classTypeContainer label {
+    font-size: 16px;
+  }
+  
+  .classAContainer input[type="radio"]:checked + label,
+  .classBContainer input[type="radio"]:checked + label,
+  .classCContainer input[type="radio"]:checked + label,
+  .classDContainer input[type="radio"]:checked + label {
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+
+  #solveBtn{
+    background-color: #D8E2DC;
+  }
