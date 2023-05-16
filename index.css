@@ -1,6 +1,17 @@
-body{
+*{
     padding: 0;
     margin: 0;
+    font-family: 'Alkatra', cursive;
+}
+
+body{
+  background-color: #f5f5f5
+}
+
+label{
+  font-size: 20px;
+  font-weight: 400;
+  color: #333333;
 }
 
 .home-container{
@@ -8,11 +19,17 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+h1{
+  color: #333333;
 }
 
 .container{
     padding: 5px;
-    background-color: #E8E8E4;
+    background-color: #ffffff;
     flex-direction: column;
     align-items: center;
     display: flex;
@@ -40,26 +57,30 @@ body{
     margin-left: 200px;
 }
 
-.matrix{
+#matrix{
     margin: 20px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    
 }
 
-  .matrix table {
+  #matrix table {
     border-collapse: collapse;
   }
   
-  .matrix th,
-  .matrix td {
+  #matrix th,
+  #matrix td {
     padding: 20px;
     border: 1px solid #ddd;
     text-align: center;
   }
   
-  .matrix th {
+  #matrix th {
     background-color: #f1f1f1;
   }
   
-  .matrix tr:hover {
+  #matrix tr:hover {
     background-color: #f5f5f5;
   }
   
@@ -122,8 +143,58 @@ body{
     font-weight: bold;
     color: #007bff;
   }
-  
 
-  #solveBtn{
-    background-color: #D8E2DC;
+  button{
+    font-size: 24px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 3px;
+    background-color: #333333;
+    color: #ffffff;
+    cursor: pointer;
   }
+
+  button:hover{
+    background-color: #555555;
+    transition: 0.3s;
+  }
+  
+  #test-data {
+    color: #333333;
+  }
+
+  .workSpace {
+    background-color: #E5E5E5;
+    margin-bottom: 10px;
+  }
+  
+  #MSE {
+    color: #333333;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  #matrix {
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+  }
+  
+  #table {
+    border-collapse: collapse;
+  }
+  
+  #table td {
+    padding: 5px 10px;
+    border: 1px solid #dddddd;
+  }
+  
+  #table th {
+    padding: 5px 10px;
+    border: 1px solid #dddddd;
+    background-color: #f5f5f5;
+    font-weight: bold;
+  } 

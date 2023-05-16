@@ -33,15 +33,15 @@ reloadBtn.addEventListener("click", (e) => {
   location.reload();
 });
 
-addDataBtn.addEventListener("click",(e)=>{
+addDataBtn.addEventListener("click", (e) => {
   finish = 0;
-  addDataBtn.style.display="none"
-  testData.innerText="choose your points"
+  addDataBtn.style.display = "none";
+  testData.innerText = "choose your points";
   const elements = document.querySelectorAll(".testPoint");
   elements.forEach((element) => {
     element.remove();
   });
-})
+});
 
 solveBtn.addEventListener("click", findWight);
 classNum.addEventListener("change", changeClassNum);
@@ -195,73 +195,75 @@ function drawAt(point, dotSize) {
 }
 
 function findWight() {
-  addDataBtn.style.display="inline-block"
-  const lines = document.querySelectorAll("svg line");
-  lines.forEach((line) => line.remove());
-  finalResults = [];
-  for (let i = 0; i < Number(classNum.value); i++) {
-    result = Perceptron(
-      learningRate.value,
-      maxIteration.value,
+  if (trainingData.length > 0) {
+    addDataBtn.style.display = "inline-block";
+    const lines = document.querySelectorAll("svg line");
+    lines.forEach((line) => line.remove());
+    finalResults = [];
+    for (let i = 0; i < Number(classNum.value); i++) {
+      result = Perceptron(
+        learningRate.value,
+        maxIteration.value,
+        trainingData,
+        i
+      );
+      finalResults.push(result);
+      console.log(result);
+      const x1 = 0; //w1*x+w2*y=th
+      const y1 = (result.threshold - result.w1 * x1) / result.w2;
+      const x2 = 800;
+      const y2 = (result.threshold - result.w1 * x2) / result.w2;
+      //
+      console.log("x1", x1, "y1", y1, "x2", x2, "y2", y2);
+      console.log("The value of MSE = ", result.MSE);
+      const newLine = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "line"
+      );
+
+      let color;
+      if (i === 0) color = "black";
+      else if (i === 1) color = "blue";
+      else if (i === 2) color = "red";
+      else if (i === 3) color = "green";
+      newLine.setAttribute("x1", x1);
+      newLine.setAttribute("y1", y1);
+      newLine.setAttribute("x2", x2);
+      newLine.setAttribute("y2", y2);
+      newLine.setAttribute("stroke", color);
+      newLine.setAttribute("stroke-width", "2");
+      workSpace.appendChild(newLine);
+      if (Number(classNum.value) === 2) break;
+    }
+    finish = 1;
+    while (MSE.firstChild) {
+      MSE.removeChild(MSE.firstChild);
+    }
+    for (let i = 0; i < finalResults.length; i++) {
+      const child = document.createElement("div");
+      child.textContent =
+        "Mean Square Error " + i + " = " + finalResults[i].MSE.toFixed(4);
+      MSE.appendChild(child);
+    }
+    const ConfusionMatrix = findConfusionMatrix(
+      finalResults,
       trainingData,
-      i
+      Number(classNum.value)
     );
-    finalResults.push(result);
-    console.log(result);
-    const x1 = 0; //w1*x+w2*y=th
-    const y1 = (result.threshold - result.w1 * x1) / result.w2;
-    const x2 = 800;
-    const y2 = (result.threshold - result.w1 * x2) / result.w2;
-    //
-    console.log("x1", x1, "y1", y1, "x2", x2, "y2", y2);
-    console.log("The value of MSE = ", result.MSE);
-    const newLine = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "line"
-    );
+    let label = ["", "classA", "classB"];
 
-    let color;
-    if (i === 0) color = "black";
-    else if (i === 1) color = "blue";
-    else if (i === 2) color = "red";
-    else if (i === 3) color = "green";
-    newLine.setAttribute("x1", x1);
-    newLine.setAttribute("y1", y1);
-    newLine.setAttribute("x2", x2);
-    newLine.setAttribute("y2", y2);
-    newLine.setAttribute("stroke", color);
-    newLine.setAttribute("stroke-width", "2");
-    workSpace.appendChild(newLine);
-    if (Number(classNum.value) === 2) break;
+    if (classNum.value >= 3) {
+      label.push("classC");
+    }
+    if (classNum.value == 4) {
+      label.push("classD");
+    }
+    label.push("not recognize");
+    drawConfusionMatrix(ConfusionMatrix, label);
+    console.log("ConfusionMatrix = ", ConfusionMatrix);
   }
-  finish = 1;
-  while (MSE.firstChild) {
-    MSE.removeChild(MSE.firstChild);
-  }
-  for (let i = 0; i < finalResults.length; i++) {
-    const child = document.createElement("div");
-    child.textContent =
-      "Mean Square Error " + i + " = " + finalResults[i].MSE.toFixed(4);
-    MSE.appendChild(child);
-  }
-  const ConfusionMatrix = findConfusionMatrix(
-    finalResults,
-    trainingData,
-    Number(classNum.value)
-  );
-  let label = ["", "classA", "classB"];
-
-  if (classNum.value >= 3) {
-    label.push("classC");
-  }
-  if (classNum.value == 4) {
-    label.push("classD");
-  }
-  label.push("not recognize");
-  drawConfusionMatrix(ConfusionMatrix, label);
-  console.log("ConfusionMatrix = ", ConfusionMatrix);
 }
-
+/**************************************************************************************** */
 const findConfusionMatrix = (finalResults, trainingData, classNum) => {
   const ConfusionMatrix = [];
 
@@ -291,6 +293,7 @@ const findConfusionMatrix = (finalResults, trainingData, classNum) => {
 
 const drawConfusionMatrix = (matrix, labels) => {
   let table = document.getElementById("table");
+  let matrixContainer = document.getElementById("matrix");
   if (finish) {
     while (table.firstChild) {
       table.removeChild(table.firstChild);
@@ -319,6 +322,7 @@ const drawConfusionMatrix = (matrix, labels) => {
     index++;
     table.appendChild(tr);
   }
+  matrixContainer.style.display = "flex";
 };
 
 // drawConfusionMatrix(mm, ["", "Class A", "Class B", "Class C"])
